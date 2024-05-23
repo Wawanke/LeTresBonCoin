@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/inPost.css">
+    <title>Le Très Bon Coin</title>
+
+</head>
+<body>
+    <div class="background">
+        <div class="container">
+          <div class="screen">
+            <div class="screen-header">
+                <div class="screen-header-left">
+                  <div class="screen-header-button close"></div>
+                  <div class="screen-header-button maximize"></div>
+                  <div class="screen-header-button minimize"></div>
+                </div>
+                <div class="screen-header-right">
+                  <div class="screen-header-ellipsis"></div>
+                  <div class="screen-header-ellipsis"></div>
+                  <div class="screen-header-ellipsis"></div>
+                </div>
+            </div>
+            <div class="screen-body">
+                <div class="header-body">
+                    <div class="arrow">
+                        <a href="/home">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </a>
+                    </div> 
+                    <div class="post-title">
+                            <div class="user-info">
+                                <h2>{{.PostC.Name}}</h2>
+                                <a href="/profileVisitor">
+                                    <div class="image">
+                                        <img src="https://tinypic.host/images/2022/12/19/img_avatar.png" alt="" class="profile-pic">
+                                    </div>
+                                </a>
+                            </div>
+                        <strong><p>{{.PostC.Titre}}</p></strong>
+                    </div>
+                    </div>
+                </div>
+                <div class="screen-body-item">
+                    <p>{{.PostC.Contenu}}</p>
+                    <form method="POST" action="">
+                        <button name="likep" value={{.PostC.ID}} class="w3-button w3-theme-d1 w3-margin-bottom"><i class="fa fa-thumbs-up"></i> Like {{.PostC.Like}}</button>
+
+                    </form>
+                    <form method="POST" action="">
+                        <input class="commm" type="text" name="ajout"  required="">  <button type="submit" class="w3-button w3-theme-d1 w3-margin-bottom" ><i class="fa fa-comment"></i> Comment </button>
+
+                    </form>
+                </div>
+                {{range .Contenue}}
+                <div class="comments-container">
+                    <div class="flex-container">
+                        <a href="/profileVisitor">
+                            <div class="image-comments">
+                                <img src="https://tinypic.host/images/2022/12/19/img_avatar.png" alt="" class="profile-pic">
+                            </div>
+                        </a>
+                    <h1>Anonyme</h1>
+                    </div>
+
+                    <div class="content-comments">
+                        <p>{{.Contenue}}</p>
+                    </div>
+                </div>{{end}}
+                <form action="" method="POST">
+
+                    <input type="submit" class="Btn cancel" value="Back"/>
+
+                </form>
+
+                </div>
+            </div>
+          </div>
+        </div>
+    </div>
+</body>
+</html>

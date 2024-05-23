@@ -1,0 +1,202 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500&display=swap');
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Flèches */
+
+.arrow {
+  margin-right: 270px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transform: rotate(90deg);
+  cursor: pointer;
+}
+
+.arrow span {
+  display: block;
+  width: 1.2vw;
+  height: 1.2vw;
+  border-bottom: 4px solid silver;
+  border-right: 4px solid silver;
+  transform: rotate(45deg);
+  margin: -10px;
+  animation: fleche 2s infinite;
+}
+
+.arrow span:nth-child(2) {
+  animation-delay: -0.2s;
+}
+
+.arrow span:nth-child(3) {
+  animation-delay: -0.4s;
+}
+
+@keyframes fleche {
+  0% {
+      opacity: 0;
+      transform: rotate(45deg) translate(-20px, -20px);
+  }
+  50% {
+      opacity: 1;
+  }
+  100% {
+      opacity: 0;
+      transform: rotate(45deg) translate(20px, 20px);
+  }
+}
+
+.main{
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e) no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+.profile-card{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 400px;
+  width: 100%;
+  border-radius: 25px;
+  padding: 30px;
+  border: 1px solid #407AA4;
+  box-shadow: 5px 20px 50px #000;
+}
+.image{
+  position: relative;
+  height: 150px;
+  width: 150px;
+}
+.image .profile-pic{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+}
+
+span{
+  font-size: 18px;
+  color: silver;
+}
+
+.data h2{
+  font-size: 33px;
+  font-weight: 600;
+  color: #407AA4;
+}
+
+.data{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 15px;
+  color: silver;
+}
+
+h3{
+  color: #407AA4;
+}
+
+.row{
+  display: flex;
+  align-items: center;
+  margin-top: 30px;
+}
+.row .info{
+  text-align: center;
+  padding: 0 20px;
+}
+.buttons{
+  display: flex;
+  align-items: center;
+  margin-top: 30px;
+}
+.buttons .btn{
+  color: #fff;
+  text-decoration: none;
+  margin: 0 20px;
+  padding: 8px 25px;
+  border-radius: 25px;
+  font-size: 18px;
+  white-space: nowrap;
+  background: silver;
+}
+
+.btn1{
+  color: #fff;
+  text-decoration: none;
+  margin: 0 20px;
+  padding: 8px 25px;
+  border-radius: 25px;
+  font-size: 18px;
+  white-space: nowrap;
+  background: #407AA4;
+}
+
+.buttons .btn:hover{
+  box-shadow: inset 0 5px 20px rgba(0,0,0,0.4);
+}
+
+/* Chrome, Safari, Opera */
+@-webkit-keyframes follow-animation {
+  from {background: #407AA4; color: white; width: 85px; left: 50px;}
+  to {background: #2EB82E; border-color: #2EB82E; color: #ffffff; width: 120px; left: 35px;}
+}
+@-webkit-keyframes unfollow-animation {
+  from {background: #2EB82E; color: white; width: 120px; left: 35px;}
+  to {background: #407AA4; border-color: white; color: white; width: 85px; left: 50px;}
+}
+
+/* Standard syntax */
+@keyframes follow-animation {
+  from {background: #407AA4; color: white; width: 85px; left: 50px;}
+  to {background: #2EB82E; border-color: #2EB82E; color: white; width: 120px; left: 35px;}
+}
+@keyframes unfollow-animation {
+  from {background: #2EB82E; color: #ffffff; width: 120px; left: 35px;}
+  to {background: #407AA4; border-color: #407AA4; color: white; width: 85px; left: 50px;}
+}
+
+input {
+  -webkit-appearance: none;
+}
+
+input:after {
+  color: #fff;
+  text-decoration: none;
+  margin: 0 20px;
+  padding: 8px 25px;
+  border-radius: 25px;
+  font-size: 18px;
+  white-space: nowrap;
+  background: #407AA4;
+  cursor: pointer;
+  display: inline-block;
+  text-align: center;
+
+
+
+  content: '+ Follow';
+  -webkit-animation: unfollow-animation 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  -webkit-animation-fill-mode:forwards;
+  animation: unfollow-animation 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  animation-fill-mode:forwards;
+}
+
+input:checked:after {
+  content: 'Following';
+  -webkit-animation: follow-animation 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  -webkit-animation-fill-mode:forwards;
+  animation: follow-animation 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  animation-fill-mode:forwards;
+}	
