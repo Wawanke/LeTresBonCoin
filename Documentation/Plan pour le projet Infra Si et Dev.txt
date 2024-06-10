@@ -27,10 +27,4 @@ On peut faire un service qui fournit les pages en fonction des autorisations que
 
 protéger les points d'acces du site, ex. : si une personne arrive sur le site et qu'il n'a pas l'autorisation d'aller sur certaine page de l'arborescence, la page ne doit donc pas être disponible à l'utilisateur, c'est possible en faisant des dock sur docker 
 
-Journal de bord (à mettre au clair sur un autre doc) :
 
-Semaine du 6 Mai :
-Prototype pour le site avec golang, le site à pour thématique "réseau social", fonction d'authentification avec derrière l'utilisation d'une bdd pour garder les comptes inscrit au site et après se connecter avec le compte.
-
-Semaine du 13 Mai :
-réflexion pour organiser le projet/les problèmes que l'on pourrait régler(site micro-service), découverte de la techno Docker pour la mettre en place dans le projet et on continue de dev le site 
