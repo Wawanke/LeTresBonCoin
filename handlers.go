@@ -204,6 +204,10 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	inputPswd := r.FormValue("pswd_signup")
 
 	pswd_hash, err := bcrypt.GenerateFromPassword([]byte(inputPswd), bcrypt.DefaultCost)
+	if err != nil {
+		fmt.Println("Error of encryption :")
+		fmt.Println(err)
+	}
 
 	//open database
 
@@ -226,7 +230,11 @@ func Login(w http.ResponseWriter, r *http.Request) {
 			panic(err)
 		}
 
-		test, err := createUser.Exec(inputUsername, pswd_hash, inputEmail)
+		test, err_createUserfunc := createUser.Exec(inputUsername, pswd_hash, inputEmail)
+		if err_createUserfunc != nil {
+			fmt.Println("Error of open Database :")
+			fmt.Println(err_createUserfunc)
+		}
 
 		//get the id of the chart Utilisateur that auto increment by the database. To set the link between the cart Utilisateur and data in the column UID of chart Data
 
@@ -325,7 +333,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 
 			User.ID = id
 			User.Nom_dutilisateur = username
-			User.Mot_de_passe, _ = bcrypt.GenerateFromPassword([]byte(pswd_user), bcrypt.DefaultCost)
+			User.Mot_de_passe = []byte(pswd_user)
 			User.Adresse_mail = mail_user
 			User.Follow = follow
 			User.Followers = followers
