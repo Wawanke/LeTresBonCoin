@@ -1,0 +1,36 @@
+Plan pour le projet Infra Si et Dev :
+
+Thématique du site : Forum, nom : LeTrèsBonCoin
+
+Faire une chartre de projet
+
+IMPORTANT : Documenter la manière de faire/mise en place et surtout expliquer les technos utiliser et ce qu'elle apporte, il faut qu'on fasse un "journal de bord"
+
+Pour le Dev : 
+
+Utiliser le forum en golang et isoler les différents service avec les container dock de docker (voir infra) 
+
+
+midleware
+
+
+
+(si besoin de refaire un peu de front --> framework Tayvin ou look pour bootstrap template)
+
+Pour l'Infra Si :
+
+Infrastructure micro-service :
+Pour Docker il faut wsl (regarder) wsl = Windows Subsystem for Linux
+utilisation de l'application d'aide au développement docker qui permet de fragmenter les différents services du site : avoir un dock pour l'authentification, avoir un dock pour les posts, pour le profil, pour les actualités etc... Tout en les faisant communiquer (fonctionnemment par micro-service).
+
+On peut faire un service qui fournit les pages en fonction des autorisations que l'utilisateur possède, si c'est un visiteur du site il peut observer seulement sans utiliser les fonctionnalités, mais surtout il ne doit pas avoir accès à certain "endroit du site"
+
+protéger les points d'acces du site, ex. : si une personne arrive sur le site et qu'il n'a pas l'autorisation d'aller sur certaine page de l'arborescence, la page ne doit donc pas être disponible à l'utilisateur, c'est possible en faisant des dock sur docker 
+
+Journal de bord (à mettre au clair sur un autre doc) :
+
+Semaine du 6 Mai :
+Prototype pour le site avec golang, le site à pour thématique "réseau social", fonction d'authentification avec derrière l'utilisation d'une bdd pour garder les comptes inscrit au site et après se connecter avec le compte.
+
+Semaine du 13 Mai :
+réflexion pour organiser le projet/les problèmes que l'on pourrait régler(site micro-service), découverte de la techno Docker pour la mettre en place dans le projet et on continue de dev le site 
