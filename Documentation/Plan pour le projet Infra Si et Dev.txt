@@ -4,18 +4,16 @@ Thématique du site : Forum, nom : LeTrèsBonCoin
 
 Faire une chartre de projet
 
-IMPORTANT : Documenter la manière de faire/mise en place et surtout expliquer les technos utiliser et ce qu'elle apporte, il faut qu'on fasse un "journal de bord"
+Technos utilisées  : Golang pour le back, html/CSS pour le front, docker pour l'infrastructure, github pour la mutualisation (https://github.com/Wawanke/LeTresBonCoin/tree/master).
 
 Pour le Dev : 
 
-Utiliser le forum en golang et isoler les différents service avec les container dock de docker (voir infra) 
+Figma du html/css pour avoir une idée global du site 
+voir fonctionnalités, à faire en prototype (Golang) puis exporter en microservice avec docker
 
+Fonc de base :  authenfication, profil visiteur, création post si connecté, modif profil si connecté
 
-midleware
-
-
-
-(si besoin de refaire un peu de front --> framework Tayvin ou look pour bootstrap template)
+midleware : potentiel pour bloqué le routes disponibles
 
 Pour l'Infra Si :
 
