@@ -5,10 +5,12 @@ RUN apk --no-cache add sqlite
 WORKDIR /db
 # Copy your SQLite database file into the container
 COPY db.db /db/
-RUN cd ..
+
 RUN apk update && apk add bash
 COPY script.sh /db/
 # Expose the port if needed
 EXPOSE 5432:5432
+
+
 ENTRYPOINT [ "./script.sh" ]
 # Co.mmand to run when the container starts
