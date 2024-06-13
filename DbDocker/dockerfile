@@ -1,16 +1,20 @@
 FROM alpine:latest
 # Install SQLite
 RUN apk --no-cache add sqlite
+RUN apk update && apk add bash 
+RUN apk update && apk add vim
 # Create a directory to store the database
 WORKDIR /db
 # Copy your SQLite database file into the container
 COPY db.db /db/
 
-RUN apk update && apk add bash
+RUN apk add --no-cache shadow 
+RUN chsh -s /bin/bash 
+RUN exec /bin/bash
+
 COPY script.sh /db/
+COPY test.sh /db/
+RUN chmod +x test.sh
 # Expose the port if needed
-EXPOSE 5432:5432
-
-
-ENTRYPOINT [ "./script.sh" ]
+EXPOSE 5432:5432 
 # Co.mmand to run when the container starts
