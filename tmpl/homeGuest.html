@@ -132,12 +132,11 @@
     
     <!-- Middle Column -->
     <div class="w3-col m7">
-    
       <div class="w3-row-padding">
         <div class="w3-col m12">
           <div class="w3-card w3-round w3-white">
             <div class="w3-container w3-padding">
-              <form action="" class="search-bar">
+                <form class="search-bar" method="POST">
                 <h8>Search : </h8>
                 <input type="search" name="search" pattern=".*\S.*" required>
                 <button class="search-btn" type="submit">
@@ -147,28 +146,32 @@
           </div>
         </div>
       </div>
-      
+        {{range .Post}}
+
       <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
-        <img src="" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
-        <span class="w3-right w3-opacity">!TIME EDIT</span>
-        <h4><strong>!USERNAME</strong></h4><br>
+        <img src="/images/LogoForum.png" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
+          <span class="w3-right w3-opacity">{{.Date_Heure}}</span>
+          <form action="" method="POST">
+              <button class="titlePost" name="user" value="{{.UID}}">
+          </form>
+            <h4><strong>{{.Name}}</strong></h4><br>
+
         <hr class="w3-clear">
-          <a href="/inPost">
-              <p>!CONTENU</p>
-          </a>
+          <form class="entierTitle" action="" method="POST">
+              <button class="titlePost" name="lettre" value="{{.ID}}">
+                  <p>{{.Titre}}</p>
+          </form>
         <div class="w3-row-padding" style="margin:0 -16px">
             <div class="w3-half">
             </div>
             <div class="w3-half">
           </div>
         </div>
-        <a href="/login">
-        <button type="button" class="w3-button w3-theme-d1 w3-margin-bottom"><i class="fa fa-thumbs-up"></i>  Like  (!LIKE NUMBER)</button> 
-        </a>
-        <a href="/login">
-        <button type="button" class="w3-button w3-theme-d2 w3-margin-bottom"><i class="fa fa-comment"></i>  Comment (!COMMENT NUMBER)</button> 
-        </a>
-      </div>
+          <form action="" method="POST">
+              <button name="like" value={{.ID}} class="w3-button w3-theme-d1 w3-margin-bottom"><i class="fa fa-thumbs-up"></i>  Like  {{.Like}}</button>
+
+              <button type="button" class="w3-button w3-theme-d2 w3-margin-bottom"><i class="fa fa-comment"></i>  Comment </button><form action=""></form>
+      </div>{{end}}>
       
     <!-- End Middle Column -->
     </div>
@@ -204,7 +207,7 @@
 <footer class="w3-container w3-theme-d2 w3-padding-16">
 </footer>
 <footer class="w3-container w3-theme-d5">
-  <p>Created by Jauss, Dams, Air1, Ma Tiss</p>
+  <p>Created by Joël et Air1</p>
 </footer>
  
 <script>

@@ -1,0 +1,19 @@
+Projet Infra Si et Dev : LeTrèsBonCoin
+Joël Rakotomalala et Erwann Kervoelen
+
+Journal de bord :
+
+Semaine du 6 Mai :
+Prototype pour le site avec golang, le site à pour thématique "réseau social", fonction d'authentification avec derrière l'utilisation d'une bdd pour garder les comptes inscrit au site et après se connecter avec le compte.
+
+Semaine du 13 Mai :
+réflexion pour organiser le projet/les problèmes que l'on pourrait régler(site micro-service), découverte de la techno Docker pour la mettre en place dans le projet et on continue de dev le site 
+
+Semaine du 20 Mai : 
+Fin des fonctionnalités de base en prototype, début documentation du projet.
+
+Semaine du 27 Mai :  
+Docker principalement, problème rencontrée sur la compréhension de comment faire pour mettre en place notre infrastructure.
+
+Semaine du 3 Juin : 
+Documentation MCD faite, docker mise en place compliquée par manque de communication entre nous deux.
