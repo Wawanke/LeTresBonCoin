@@ -16,5 +16,6 @@ COPY script.sh /db/
 COPY test.sh /db/
 RUN chmod +x test.sh
 # Expose the port if needed
-EXPOSE 5432:5432 
+EXPOSE 5432:5432
+ENTRYPOINT [ "./script.sh" ] 
 # Co.mmand to run when the container starts
