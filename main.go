@@ -40,7 +40,7 @@ func ProfileVisitor(w http.ResponseWriter, r *http.Request) {
 
 	//open database
 
-	db, err := sql.Open("sqlite3", "./db.db")
+	db, err := sql.Open("sqlite3", "./DbDocker/DockerBack/db.db")
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -212,7 +212,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 
 	//open database
 
-	db, err := sql.Open("sqlite3", "./db.db")
+	db, err := sql.Open("sqlite3", "./DbDocker/DockerBack/db.db")
 	if err != nil {
 		fmt.Println("Error of open Database :")
 		fmt.Println(err)
@@ -406,7 +406,7 @@ func NewPost(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("Contenu newPost : ", newPostTitle, newPostMsg, newPostTag, DateEtHeure)
 	}
 
-	db, err := sql.Open("sqlite3", "./db.db")
+	db, err := sql.Open("sqlite3", "./DbDocker/DockerBack/db.db")
 	if err != nil {
 		fmt.Println("C La Merde")
 	}
@@ -450,7 +450,7 @@ func ProfileSettings(w http.ResponseWriter, r *http.Request) {
 
 	//open database
 
-	db, err := sql.Open("sqlite3", "./db.db")
+	db, err := sql.Open("sqlite3", "./DbDocker/DockerBack/db.db")
 	if err != nil {
 		fmt.Println(err)
 	}
