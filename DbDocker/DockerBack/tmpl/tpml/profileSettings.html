@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="/css/profileSettings.css">
+    <title>Settings</title>
+</head>
+<body>
+      <div class="wrapper">
+        <div class="profile">
+          <div class="content">
+            <h1>Edit Profile</h1>
+            <form action="">
+
+              <!-- Photo -->
+              <fieldset>
+                <div class="grid-35">
+                  <label for="avatar">Your Photo</label>
+                </div>
+                <div class="grid-65">
+                  <span class="photo" type="file" title="Upload your Avatar!"></span>
+                  <input type="file" class="btn"/>
+                </div>
+              </fieldset>
+              <!-- User -->
+              <fieldset>
+                <div class="grid-35">
+                  <label for="fname">User Name</label>
+                </div>
+                <div class="grid-65">
+                  <input type="text" name="username" tabindex="1" maxlength = "10" />
+                </div>
+              </fieldset>
+              <!-- Mdp -->
+              <fieldset>
+                <div class="grid-35">
+                  <label for="description">Password</label>
+                </div>
+                <div class="grid-65">
+                  <input type = "password" name="pswd" tabindex="2"/>
+                </div>
+              </fieldset>
+              <!-- Description about User -->
+              <fieldset>
+                <div class="grid-35">
+                  <label for="description">About you</label>
+                </div>
+                <div class="grid-65">
+                  <input type = "text" name="description" maxlength = "25" tabindex="3"/>
+                </div>
+              </fieldset>
+              <!-- Country -->
+              <fieldset>
+                <div class="grid-35">
+                  <label for="country">Country</label>
+                </div>
+                <div class="grid-65">
+                  <input type="text" name="country" tabindex="5" />
+                </div>
+              </fieldset>
+              <!-- Email -->
+              <fieldset>
+                <div class="grid-35">
+                  <label for="email">Email Address</label>
+                </div>
+                <div class="grid-65">
+                  <input type="email" name="email" tabindex="6"/>
+                </div>
+              </fieldset>
+              <!-- Birth -->
+              <fieldset>
+                <div class="grid-35">
+                  <label for="birth">Birth Date</label>
+                </div>
+                <div class="grid-65">
+                  <input type="date" name="birth" tabindex="7" />
+                </div>
+              </fieldset>
+              <!-- School -->
+              <fieldset>
+                <div class="grid-35">
+                  <label for="school">Surname</label>
+                </div>
+                <div class="grid-65">
+                  <input type="text" name="surname" tabindex="9" />
+                </div>
+              </fieldset>
+              <!-- Company Name -->
+              <fieldset>
+                <div class="grid-35">
+                  <label for="company">Name</label>
+                </div>
+                <div class="grid-65">
+                  <input type="text" name="name" tabindex="10" />
+                </div>
+              </fieldset>
+              <!-- Job Position -->
+              <fieldset>
+                <div class="grid-35">
+                  <label for="position">Job</label>
+                </div>
+                <div class="grid-65">
+                  <input type="text" name="job" value="" tabindex="11" />
+                </div>
+              </fieldset>
+              <fieldset>
+                <a href="/profile">
+                    <input type="button" class="Btn cancel" value="Cancel"/>
+                </a>
+                <a href="/profile">
+                    <input type="submit" class="Btn" value="Save Changes" />
+                </a>
+              </fieldset>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    
+</body>
+</html>
+

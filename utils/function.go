@@ -406,7 +406,7 @@ func PagePost(tab []Post, w http.ResponseWriter, postID int) {
 	numeroPostComm := DBfindPostcomm(StructComm, postID)
 	StructComm.Contenue = numeroPostComm
 	fmt.Println(StructComm.Contenue, "===============regarde bro APRES REcherche===========")
-	custTemplate, err := template.ParseFiles("tmpl/inPost.html") //ici sera la page de erwan
+	custTemplate, err := template.ParseFiles("DbDocker/DockerBack/tmpl/tpml/inPost.html") //ici sera la page de erwan
 	err = custTemplate.Execute(w, StructComm)
 	if err != nil {
 

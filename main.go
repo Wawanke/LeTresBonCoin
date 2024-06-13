@@ -102,7 +102,7 @@ func ProfileVisitor(w http.ResponseWriter, r *http.Request) {
 
 	//parse html
 
-	tmpl, err := template.ParseFiles("tmpl/profileVisitor.html")
+	tmpl, err := template.ParseFiles("DbDocker/DockerBack/tmpl/tpml/profileVisitor.html")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -121,7 +121,7 @@ func ProfileVisitor(w http.ResponseWriter, r *http.Request) {
 func Home(w http.ResponseWriter, r *http.Request) {
 
 	var postID int
-	custTemplate, err := template.ParseFiles("tmpl/home.html")
+	custTemplate, err := template.ParseFiles("DbDocker/DockerBack/tmpl/tpml/home.html")
 	P.Post = utils.DBtableauDesPost()
 
 	if r.Method == "POST" {
@@ -144,7 +144,7 @@ func Home(w http.ResponseWriter, r *http.Request) {
 				temTabPostPost.Post = append(temTabPostPost.Post, utils.DBfindPost(P.Post, temTabPost[x]))
 				fmt.Println("ICI LE COMPTE-----   ", x, "  ICI LE TAB A JOUR  ", temTabPostPost)
 			}
-			custTemplate, err = template.ParseFiles("tmpl/home.html")
+			custTemplate, err = template.ParseFiles("DbDocker/DockerBack/tmpl/tpml/home.html")
 			err = custTemplate.Execute(w, temTabPostPost)
 		} else if r.FormValue("like") != "" {
 			giveLike, _ = strconv.Atoi(r.FormValue("like"))
@@ -153,7 +153,7 @@ func Home(w http.ResponseWriter, r *http.Request) {
 			utils.TrouveLeNom(r)
 			utils.DBajoutlike(P.Post, giveLike)
 			fmt.Println("Like + ", giveLike, " a était ajouté")
-			custTemplate, err = template.ParseFiles("tmpl/home.html") //ici sera la page de erwan
+			custTemplate, err = template.ParseFiles("DbDocker/DockerBack/tmpl/tpml/home.html") //ici sera la page de erwan
 			err = custTemplate.Execute(w, P)
 		} else if r.FormValue("lettre") != "" {
 			postID, _ = strconv.Atoi(r.FormValue("lettre"))
@@ -169,7 +169,7 @@ func Home(w http.ResponseWriter, r *http.Request) {
 			utils.DBajoutlike(P.Post, giveLike)
 			utils.PagePost(P.Post, w, postIDt)
 		} else {
-			custTemplate, err = template.ParseFiles("tmpl/home.html") //ici sera la page de erwan
+			custTemplate, err = template.ParseFiles("DbDocker/DockerBack/tmpl/tpml/home.html") //ici sera la page de erwan
 			err = custTemplate.Execute(w, P)
 		}
 
@@ -189,7 +189,7 @@ func Home(w http.ResponseWriter, r *http.Request) {
 }
 
 func HomeGuest(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "tmpl/homeGuest.html")
+	http.ServeFile(w, r, "DbDocker/DockerBack/tmpl/tpml/homeGuest.html")
 }
 
 func Login(w http.ResponseWriter, r *http.Request) {
@@ -389,7 +389,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	http.ServeFile(w, r, "tmpl/login.html")
+	http.ServeFile(w, r, "DbDocker/DockerBack/tmpl/tpml/login.html")
 
 }
 
@@ -422,14 +422,14 @@ func NewPost(w http.ResponseWriter, r *http.Request) {
 		utils.Update(db, User, Data, Post)
 	}
 
-	http.ServeFile(w, r, "tmpl/newPost.html")
+	http.ServeFile(w, r, "DbDocker/DockerBack/tmpl/tpml/newPost.html")
 }
 
 func Profile(w http.ResponseWriter, r *http.Request) {
 
 	//parse html
 
-	tmpl, err := template.ParseFiles("tmpl/profile.html")
+	tmpl, err := template.ParseFiles("DbDocker/DockerBack/tmpl/tpml/profile.html")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -446,7 +446,7 @@ func Profile(w http.ResponseWriter, r *http.Request) {
 
 func ProfileSettings(w http.ResponseWriter, r *http.Request) {
 
-	http.ServeFile(w, r, "tmpl/profileSettings.html")
+	http.ServeFile(w, r, "DbDocker/DockerBack/tmpl/tpml/profileSettings.html")
 
 	//open database
 
@@ -514,11 +514,11 @@ func ProfileSettings(w http.ResponseWriter, r *http.Request) {
 }
 
 func InPost(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "tmpl/inPost.html")
+	http.ServeFile(w, r, "DbDocker/DockerBack/tmpl/tpml/inPost.html")
 }
 
 func InPostGuest(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "tmpl/inPost.html")
+	http.ServeFile(w, r, "DbDocker/DockerBack/tmpl/tpml/inPost.html")
 }
 
 const port = ":3000"

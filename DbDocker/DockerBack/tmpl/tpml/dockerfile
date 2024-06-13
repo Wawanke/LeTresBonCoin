@@ -1,0 +1,19 @@
+FROM alpine:latest
+# Install SQLite
+RUN apk --no-cache add sqlite
+RUN apk update && apk add bash 
+RUN apk update && apk add vim
+# Create a directory to store the database
+WORKDIR /tpml
+# Copy your SQLite database file into the container
+COPY .. /tpml/
+
+RUN apk add --no-cache shadow 
+RUN chsh -s /bin/bash 
+RUN exec /bin/bash
+
+COPY scriptcp.sh /tpml/
+
+CMD [ "./scriptcp.sh" ]
+# Expose the port if needed
+# Co.mmand to run when the container starts
