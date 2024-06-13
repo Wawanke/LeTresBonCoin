@@ -1,6 +1,11 @@
 version: '3'
 services:
-  
+  html:
+    container_name: html
+    image: html:latest
+    volumes:
+     - dbdata:/shared 
+    tty: true
   sqlite:
     container_name: sqlite-container
     image: db:latest
@@ -16,8 +21,9 @@ services:
     ports:
      - "3000:3000"
     volumes:
-    
      - dbdata:/shared
+  
+
 
 volumes:
   dbdata:
