@@ -1,4 +1,4 @@
-#/bin/sh
+#!/bin/sh
 while true
 do
 	cd ..
@@ -7,4 +7,5 @@ do
 	sleep 20
 	cd db
 	echo "sleep end"
+	
 done
