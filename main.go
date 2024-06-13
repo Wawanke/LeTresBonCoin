@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/go-chi/chi/v5"
 	_ "github.com/mattn/go-sqlite3"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -520,32 +521,51 @@ func InPostGuest(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, "tmpl/inPost.html")
 }
 
-const port = ":8080"
+const port = ":3000"
 
 func main() {
-
+	router := chi.NewRouter()
+	// router.Use(middleware.Logger)
 	//redirection with her handlers assosiate
 
-	http.HandleFunc("/home", Home)
-	http.HandleFunc("/login", Login)
-	http.HandleFunc("/post", NewPost)
-	http.HandleFunc("/profile", Profile)
-	http.HandleFunc("/homeGuest", HomeGuest)
-	http.HandleFunc("/profileSettings", ProfileSettings)
-	http.HandleFunc("/profileVisitor", ProfileVisitor)
-	http.HandleFunc("/inPost", InPost)
-	http.HandleFunc("/inPostGuest", InPostGuest)
+	router.Get("/home", Home)
+	router.Post("/home", Home)
+	router.Get("/home", Home)
+	router.Get("/post", NewPost)
+	router.Get("/profile", Profile)
+	router.Get("/homeGuest", HomeGuest)
+	router.Get("/profileSettings", ProfileSettings)
+	router.Get("/profileVisitor", ProfileVisitor)
+	router.Get("/inPost", InPost)
+	router.Get("/inPostGuest", InPostGuest)
+	router.Get("/login", Login)
+	router.Handle("/css/*", http.StripPrefix("/css/", http.FileServer(http.Dir("./css"))))
+	router.Handle("/images/*", http.StripPrefix("/images/", http.FileServer(http.Dir("./images"))))
+	server := &http.Server{
+		Addr:    port,
+		Handler: router,
+	}
+
+	// http.HandleFunc("/home", home)
+	// http.HandleFunc("/post", NewPost)
+	// http.HandleFunc("/profile", Profile)
+	// http.HandleFunc("/homeGuest", HomeGuest)
+	// http.HandleFunc("/profileSettings", ProfileSettings)
+	// http.HandleFunc("/profileVisitor", ProfileVisitor)
+	// http.HandleFunc("/inPost", InPost)
+	// http.HandleFunc("/inPostGuest", InPostGuest)
 
 	//
-
-	http.Handle("/css/", http.StripPrefix("/css/", http.FileServer(http.Dir("./css"))))
-	http.Handle("/images/", http.StripPrefix("/images/", http.FileServer(http.Dir("./images"))))
 
 	//print url
 
 	fmt.Println("\n(http://localhost"+port+"/login) -  Server started on port", port)
 
 	// start server
-	http.ListenAndServe(port, nil)
+	err := server.ListenAndServe()
+	if err != nil {
+		fmt.Printf("error", err)
+	}
+	// http.ListenAndServe(port, nil)
 
 }

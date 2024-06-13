@@ -3,14 +3,15 @@ package utils
 import (
 	"database/sql"
 	"fmt"
-	_ "github.com/mattn/go-sqlite3"
-	"golang.org/x/crypto/bcrypt"
 	"html/template"
 	"log"
 	"net/http"
 	"strconv"
 	"strings"
 	"time"
+
+	_ "github.com/mattn/go-sqlite3"
+	"golang.org/x/crypto/bcrypt"
 )
 
 var templateshowPost *template.Template
@@ -58,7 +59,7 @@ func Update(db *sql.DB, UserSturct Utilisateur, DataStruct Data, PostStruct Post
 // function that emplty struct
 func Logout(UserSturct Utilisateur, DataStruct Data, PostStruct Post) {
 
-	db, _ := sql.Open("sqlite3", "./db.db")
+	db, _ := sql.Open("sqlite3", "./DbDocker/DockerBack/db.db")
 
 	Update(db, UserSturct, DataStruct, PostStruct)
 
@@ -135,7 +136,7 @@ func ActualDateInString() string {
 func fillStructPost(IDpost string) Post { // remplir une struct qui représente un post
 	var data Post
 
-	db, err := sql.Open("sqlite3", "./db.db")
+	db, err := sql.Open("sqlite3", "./DbDocker/DockerBack/db.db")
 
 	if err != nil {
 		fmt.Println("C La Merde")
@@ -173,7 +174,7 @@ func fillStructPost(IDpost string) Post { // remplir une struct qui représente 
 func FillStructComm() []Commentaire {
 	var P []Commentaire
 	var TemP Commentaire
-	bdd, err := sql.Open("sqlite3", "./db.db")
+	bdd, err := sql.Open("sqlite3", "./DbDocker/DockerBack/db.db")
 	// fmt.Println("Bdd Ouvert ")
 	defer bdd.Close()
 	stmt, err := bdd.Prepare("SELECT ID, ID, PID, Contenue FROM Commentaire;")
@@ -210,7 +211,7 @@ func TrouveLeNom(r *http.Request) {
 func DBtableauDesPost() []Post {
 	var P []Post
 	var TemP Post
-	bdd, err := sql.Open("sqlite3", "./db.db")
+	bdd, err := sql.Open("sqlite3", "./DbDocker/DockerBack/db.db")
 	// fmt.Println("Bdd Ouvert ")
 	defer bdd.Close()
 	stmt, err := bdd.Prepare("SELECT * FROM Post;")
@@ -237,7 +238,7 @@ func DBtableauDesPost() []Post {
 	return P
 }
 func DBajoutlike(tabPost []Post, id int) {
-	bdd, err := sql.Open("sqlite3", "./db.db")
+	bdd, err := sql.Open("sqlite3", "./DbDocker/DockerBack/db.db")
 	if err != nil {
 		fmt.Println(err, "BDD FAIled")
 	}
@@ -291,7 +292,7 @@ func DBsearchPost(tabPost []Post, id int) Post {
 func showPost(w http.ResponseWriter, r *http.Request) {
 	templateshowPost.ExecuteTemplate(w, "showPost.html", nil)
 
-	db, err := sql.Open("sqlite3", "./db.db")
+	db, err := sql.Open("sqlite3", "./DbDocker/DockerBack/db.db")
 
 	if err != nil {
 		fmt.Println("C La Merde")
@@ -312,7 +313,7 @@ func showPost(w http.ResponseWriter, r *http.Request) {
 	defer rows.Close()
 }
 func Search(r *http.Request) []int {
-	db, err := sql.Open("sqlite3", "./db.db")
+	db, err := sql.Open("sqlite3", "./DbDocker/DockerBack/db.db")
 	fmt.Println("BDD OUVERT")
 	if err != nil {
 		fmt.Println("C La Merde")
@@ -412,7 +413,7 @@ func PagePost(tab []Post, w http.ResponseWriter, postID int) {
 	}
 }
 func DBajoutcomm(commStr string, UID int, ID int, PID int) {
-	db, err := sql.Open("sqlite3", "./db.db")
+	db, err := sql.Open("sqlite3", "./DbDocker/DockerBack/db.db")
 	ID++
 
 	if err != nil {
@@ -429,7 +430,7 @@ func DBajoutcomm(commStr string, UID int, ID int, PID int) {
 	fmt.Println(err, "<-------------ICI LA ================================")
 }
 func DBajoutPost(UID int, Titre string, Contenu string, Tag string) {
-	db, err := sql.Open("sqlite3", "./db.db")
+	db, err := sql.Open("sqlite3", "./DbDocker/DockerBack/db.db")
 	if err != nil {
 		fmt.Println("C La Merde")
 		panic(err)
@@ -449,7 +450,7 @@ func GetUserName(id int) string {
 	var UID int
 	var Name string
 
-	db, err := sql.Open("sqlite3", "./db.db")
+	db, err := sql.Open("sqlite3", "./DbDocker/DockerBack/db.db")
 	if err != nil {
 		fmt.Println(err)
 	}

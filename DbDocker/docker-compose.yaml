@@ -1,0 +1,28 @@
+version: '3'
+services:
+  
+  sqlite:
+    container_name: sqlite-container
+    image: db:latest
+
+    volumes:
+      - dbdata:/shared
+    ports:
+      - "5432:5432"
+    tty: true
+  main:
+    container_name: golang
+    image: golang:latest
+    ports:
+     - "3000:3000"
+    volumes:
+    
+     - dbdata:/shared
+
+volumes:
+  dbdata:
+    driver: local
+    driver_opts:
+      type: "none"
+      o: "bind"
+      device: 'C:\Users\goula\OneDrive\Documents\Cours\LeTresBonCoin\DbDocker\DockerBack'
