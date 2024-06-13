@@ -2,10 +2,12 @@
 while true
 do
 	cd ..
-	cp db/db.db ./shared
+	cp shared/db.db ./db
 	echo "copyDone"
-	sleep 20
+	sleep 30
+	cp db/db.db ./shared
 	cd db
 	echo "sleep end"
 	
 done
+
