@@ -12,10 +12,7 @@ RUN apk add --no-cache shadow
 RUN chsh -s /bin/bash 
 RUN exec /bin/bash
 
-COPY script.sh /db/
-COPY test.sh /db/
-RUN chmod +x test.sh
+COPY scriptcp.sh /db/
 # Expose the port if needed
 EXPOSE 5432:5432
-ENTRYPOINT [ "./script.sh" ] 
 # Co.mmand to run when the container starts
