@@ -48,7 +48,7 @@ docker build -t  db .
 Puis il suffit d'aller sur le site :
 
 ```bash
-http://localhost:8080/login
+http://localhost:3000/login
 ```
 
 ## Kervoelen Erwann, Joël Rakotomalala
