@@ -10,6 +10,7 @@ import (
 	"strconv"
 
 	"github.com/go-chi/chi/v5"
+	_ "github.com/go-sql-driver/mysql"
 	_ "github.com/mattn/go-sqlite3"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -40,11 +41,11 @@ func ProfileVisitor(w http.ResponseWriter, r *http.Request) {
 
 	//open database
 
-	db, err := sql.Open("sqlite3", "./DbDocker/DockerBack/db.db")
+	db, err := sql.Open("mysql", "root:powerage@tcp(127.0.0.1:3307)/test")
 	if err != nil {
-		fmt.Println(err)
+		panic(err.Error())
 	}
-
+	db.Exec(`set search_path='test'`)
 	//prepare query of chart Utilisateur
 
 	getUser, err := db.Prepare("SELECT ID, Nom_Utilisateur, Adresse_mail, Follow, Followers, Description, Nb_Post FROM Utilisateur")
@@ -212,13 +213,12 @@ func Login(w http.ResponseWriter, r *http.Request) {
 
 	//open database
 
-	db, err := sql.Open("sqlite3", "./DbDocker/DockerBack/db.db")
+	db, err := sql.Open("mysql", "root:powerage@tcp(127.0.0.1:3307)/test")
 	if err != nil {
-		fmt.Println("Error of open Database :")
-		fmt.Println(err)
+		panic(err.Error())
 	}
 	defer db.Close()
-
+	db.Exec(`set search_path='test'`)
 	//checks if the user has entered getData and if true insert their log in the database
 
 	if inputUsername != "" && inputEmail != "" && inputPswd != "" {
@@ -406,14 +406,14 @@ func NewPost(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("Contenu newPost : ", newPostTitle, newPostMsg, newPostTag, DateEtHeure)
 	}
 
-	db, err := sql.Open("sqlite3", "./DbDocker/DockerBack/db.db")
+	db, err := sql.Open("mysql", "root:powerage@tcp(127.0.0.1:3307)/test")
 	if err != nil {
-		fmt.Println("C La Merde")
+		panic(err.Error())
 	}
-	defer db.Close()
+	db.Exec(`set search_path='test'`)
 
 	if newPostTitle != "" && newPostMsg != "" {
-		statementInfos, err := db.Prepare("INSERT INTO Post (UID,Name, Titre, Contenu, Date_Heure, Tag, Like) VALUES (?,?, ?, ?, ?, ?, ?)")
+		statementInfos, err := db.Prepare("INSERT INTO Post (UID,Name, Titre, Contenu, Date_Heure, Tag, Like) VALUES ( ?, ?, ?, ?, ?, ?, ?)")
 		if err != nil {
 			panic(err)
 		}
@@ -450,11 +450,11 @@ func ProfileSettings(w http.ResponseWriter, r *http.Request) {
 
 	//open database
 
-	db, err := sql.Open("sqlite3", "./DbDocker/DockerBack/db.db")
+	db, err := sql.Open("mysql", "root:powerage@tcp(127.0.0.1:3307)/test")
 	if err != nil {
-		fmt.Println(err)
+		panic(err.Error())
 	}
-
+	db.Exec(`set search_path='test'`)
 	//get argumente enter in the html an attribute in the good struct
 
 	userName, bool := utils.EditProfile(r, "username")
@@ -523,8 +523,21 @@ func InPostGuest(w http.ResponseWriter, r *http.Request) {
 
 const port = ":3000"
 
+func test() {
+	db, err := sql.Open("mysql", "root:powerage@tcp(127.0.0.1:3307)/test")
+	if err != nil {
+		panic(err.Error())
+	}
+
+	db.Exec(`set search_path='test'`)
+	fmt.Println(db.Exec(`SHOW TABLES;`))
+	fmt.Println(db)
+	fmt.Println("Success!")
+}
 func main() {
+
 	router := chi.NewRouter()
+	fmt.Println(utils.InitDatabase())
 	// router.Use(middleware.Logger)
 	//redirection with her handlers assosiate
 

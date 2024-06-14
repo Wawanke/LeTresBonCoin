@@ -10,6 +10,7 @@ import (
 	"strings"
 	"time"
 
+	_ "github.com/go-sql-driver/mysql"
 	_ "github.com/mattn/go-sqlite3"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -17,8 +18,36 @@ import (
 var templateshowPost *template.Template
 var StructComm PostComm
 
-//function that update information in the database
+type DBConfig struct {
+	DatabaseUser     string
+	DatabasePassword string
+	DatabaseName     string
+	DatabaseUrl      string
+	DatabasePort     string
+}
 
+var db *sql.DB
+
+// function that update information in the database
+func InitDatabase() *sql.DB {
+
+	db, err := sql.Open("mysql", "root:powerage@tcp(127.0.0.1:3307)/test")
+	if err != nil {
+		panic(err.Error())
+	}
+	db.Exec(`set search_path='test'`)
+	res, _ := db.Query("SHOW TABLES")
+
+	var table string
+
+	for res.Next() {
+		res.Scan(&table)
+		fmt.Println(table)
+	}
+	defer db.Close()
+
+	return (db)
+}
 func Update(db *sql.DB, UserSturct Utilisateur, DataStruct Data, PostStruct Post) {
 
 	updateUser, err := db.Prepare("UPDATE Utilisateur SET Nom_Utilisateur=?,Mot_de_passe=?,Adresse_mail=?,Follow=?, Followers=?, Description=?,Nb_Post=? WHERE ID=?  ")
@@ -36,12 +65,8 @@ func Update(db *sql.DB, UserSturct Utilisateur, DataStruct Data, PostStruct Post
 	if err != nil {
 		fmt.Println(err)
 	}
-	defer updateData.Close()
 
-	_, err = updateData.Exec(DataStruct.UID, DataStruct.Pays, DataStruct.Prenom, DataStruct.Nom, DataStruct.Job, DataStruct.Naissance, DataStruct.UID)
-	if err != nil {
-		fmt.Print(err)
-	}
+	defer updateData.Close()
 
 	updatePost, err := db.Prepare("UPDATE Post SET ID=?, UID=?, Name=?, Titre=?, Contenu=?, Date_Heure=?, Tag=?,Like=? , Nb_Com=? WHERE UID=?  ")
 	if err != nil {
@@ -59,7 +84,11 @@ func Update(db *sql.DB, UserSturct Utilisateur, DataStruct Data, PostStruct Post
 // function that emplty struct
 func Logout(UserSturct Utilisateur, DataStruct Data, PostStruct Post) {
 
-	db, _ := sql.Open("sqlite3", "./DbDocker/DockerBack/db.db")
+	db, err := sql.Open("mysql", "root:powerage@tcp(127.0.0.1:3307)/test")
+	if err != nil {
+		panic(err.Error())
+	}
+	db.Exec(`set search_path='test'`)
 
 	Update(db, UserSturct, DataStruct, PostStruct)
 
@@ -135,13 +164,11 @@ func ActualDateInString() string {
 }
 func fillStructPost(IDpost string) Post { // remplir une struct qui représente un post
 	var data Post
-
-	db, err := sql.Open("sqlite3", "./DbDocker/DockerBack/db.db")
-
+	db, err := sql.Open("mysql", "root:powerage@tcp(127.0.0.1:3307)/test")
 	if err != nil {
-		fmt.Println("C La Merde")
+		panic(err.Error())
 	}
-	defer db.Close()
+	db.Exec(`set search_path='test'`)
 
 	stmt, err := db.Prepare("SELECT ID, Titre, Contenu, Date_Heure, Tag, Like FROM Post WHERE ID = ?")
 	if err != nil {
@@ -174,9 +201,12 @@ func fillStructPost(IDpost string) Post { // remplir une struct qui représente 
 func FillStructComm() []Commentaire {
 	var P []Commentaire
 	var TemP Commentaire
-	bdd, err := sql.Open("sqlite3", "./DbDocker/DockerBack/db.db")
+	bdd, err := sql.Open("mysql", "root:powerage@tcp(127.0.0.1:3307)/test")
+	if err != nil {
+		panic(err.Error())
+	}
 	// fmt.Println("Bdd Ouvert ")
-	defer bdd.Close()
+	bdd.Exec(`set search_path='test'`)
 	stmt, err := bdd.Prepare("SELECT ID, ID, PID, Contenue FROM Commentaire;")
 	if err != nil {
 		panic(err)
@@ -211,9 +241,12 @@ func TrouveLeNom(r *http.Request) {
 func DBtableauDesPost() []Post {
 	var P []Post
 	var TemP Post
-	bdd, err := sql.Open("sqlite3", "./DbDocker/DockerBack/db.db")
+	bdd, err := sql.Open("mysql", "root:powerage@tcp(127.0.0.1:3307)/test")
+	if err != nil {
+		panic(err.Error())
+	}
 	// fmt.Println("Bdd Ouvert ")
-	defer bdd.Close()
+	bdd.Exec(`set search_path='test'`)
 	stmt, err := bdd.Prepare("SELECT * FROM Post;")
 	if err != nil {
 		panic(err)
@@ -238,10 +271,12 @@ func DBtableauDesPost() []Post {
 	return P
 }
 func DBajoutlike(tabPost []Post, id int) {
-	bdd, err := sql.Open("sqlite3", "./DbDocker/DockerBack/db.db")
+	bdd, err := sql.Open("mysql", "root:powerage@tcp(127.0.0.1:3307)/test")
 	if err != nil {
-		fmt.Println(err, "BDD FAIled")
+		panic(err.Error())
 	}
+	defer bdd.Close()
+	db.Exec(`set search_path='test'`)
 	for x, _ := range tabPost {
 		fmt.Println(">>>>>>>>>>>>>>", tabPost[x].Like, "<<<<<<<<<<<<<<<<<<")
 		if tabPost[x].ID == id {
@@ -292,14 +327,12 @@ func DBsearchPost(tabPost []Post, id int) Post {
 func showPost(w http.ResponseWriter, r *http.Request) {
 	templateshowPost.ExecuteTemplate(w, "showPost.html", nil)
 
-	db, err := sql.Open("sqlite3", "./DbDocker/DockerBack/db.db")
-
+	db, err := sql.Open("mysql", "root:powerage@tcp(127.0.0.1:3307)/test")
 	if err != nil {
-		fmt.Println("C La Merde")
-		panic(err)
+		panic(err.Error())
 	}
 	defer db.Close()
-
+	db.Exec(`set search_path='test'`)
 	stmt, err := db.Prepare("SELECT ID, Titre, Tag FROM Post")
 	if err != nil {
 		panic(err)
@@ -313,14 +346,12 @@ func showPost(w http.ResponseWriter, r *http.Request) {
 	defer rows.Close()
 }
 func Search(r *http.Request) []int {
-	db, err := sql.Open("sqlite3", "./DbDocker/DockerBack/db.db")
-	fmt.Println("BDD OUVERT")
+	db, err := sql.Open("mysql", "root:powerage@tcp(127.0.0.1:3307)/test")
 	if err != nil {
-		fmt.Println("C La Merde")
-		panic(err)
+		panic(err.Error())
 	}
 	defer db.Close()
-
+	db.Exec(`set search_path='test'`)
 	stmt, err := db.Prepare("SELECT ID, Titre, Tag FROM Post")
 	if err != nil {
 		panic(err)
@@ -413,14 +444,13 @@ func PagePost(tab []Post, w http.ResponseWriter, postID int) {
 	}
 }
 func DBajoutcomm(commStr string, UID int, ID int, PID int) {
-	db, err := sql.Open("sqlite3", "./DbDocker/DockerBack/db.db")
-	ID++
-
+	db, err := sql.Open("mysql", "root:powerage@tcp(127.0.0.1:3307)/test")
 	if err != nil {
-		fmt.Println("C La Merde")
-		panic(err)
+		panic(err.Error())
 	}
 	defer db.Close()
+	db.Exec(`set search_path='test'`)
+	ID++
 	stmt, err := db.Exec("INSERT INTO Commentaire ( UID, PID, Contenue)VALUES (?,?,?)", UID, PID, commStr)
 	fmt.Println("BDD OUVERT")
 	if err != nil {
@@ -430,12 +460,12 @@ func DBajoutcomm(commStr string, UID int, ID int, PID int) {
 	fmt.Println(err, "<-------------ICI LA ================================")
 }
 func DBajoutPost(UID int, Titre string, Contenu string, Tag string) {
-	db, err := sql.Open("sqlite3", "./DbDocker/DockerBack/db.db")
+	db, err := sql.Open("mysql", "root:powerage@tcp(127.0.0.1:3307)/test")
 	if err != nil {
-		fmt.Println("C La Merde")
-		panic(err)
+		panic(err.Error())
 	}
 	defer db.Close()
+	db.Exec(`set search_path='test'`)
 	stmt, err := db.Exec("INSERT INTO Post ( ID, Titre, Contenu, Date_Heure, Tag, Like)VALUES (?,?,?,?,?,?)", UID, Titre, Contenu, "1200", Tag, 0)
 	fmt.Println("BDD OUVERT")
 	if err != nil {
@@ -450,12 +480,12 @@ func GetUserName(id int) string {
 	var UID int
 	var Name string
 
-	db, err := sql.Open("sqlite3", "./DbDocker/DockerBack/db.db")
+	db, err := sql.Open("mysql", "root:powerage@tcp(127.0.0.1:3307)/test")
 	if err != nil {
-		fmt.Println(err)
+		panic(err.Error())
 	}
 	defer db.Close()
-
+	db.Exec(`set search_path='test'`)
 	getUser, err := db.Prepare("SELECT ID,Nom_Utilisateur FROM Utilisateur")
 	if err != nil {
 		fmt.Println("Error of get user form database :")
