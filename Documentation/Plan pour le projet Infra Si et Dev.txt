@@ -4,7 +4,7 @@ Thématique du site : Forum, nom : LeTrèsBonCoin
 
 Faire une chartre de projet
 
-Technos utilisées  : Golang pour le back, html/CSS pour le front, docker pour l'infrastructure, github pour la mutualisation (https://github.com/Wawanke/LeTresBonCoin/tree/master).
+Technos utilisées  : Golang pour le back, html/CSS pour le front, docker pour l'infrastructure, MySQL pour la base de donnée, github pour la mutualisation (https://github.com/Wawanke/LeTresBonCoin/tree/master).
 
 Pour le Dev : 
 
