@@ -45,4 +45,10 @@ En allant dans le dossier DbDocker ouvrir un bash :
 docker build -t  db .
 ```
 
+Puis il suffit d'aller sur le site :
+
+```bash
+http://localhost:8080/login
+```
+
 ## Kervoelen Erwann, Joël Rakotomalala
