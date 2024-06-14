@@ -22,8 +22,6 @@ git clone https://github.com/Wawanke/LeTresBonCoin.git
 ##  Lancer les dockers
 
 Installation:
-git pull https://github.com/Wawanke/LeTresBonCoin.git
-ensuit une fois dedans 
 
 Voici les étapes à suivre après avoir récupérer le projet :
 
