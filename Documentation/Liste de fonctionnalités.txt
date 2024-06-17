@@ -2,8 +2,8 @@ LeTrèsBonCoin
 
 Forum 
 
-Fonctionnalités minimale :
-Authenfication avec un compte : nom d'utilisateur, mail, mot de passe
+Fonctionnalités minimales :
+Authentification avec un compte : nom d'utilisateur, mail, mot de passe
 Visite du site en tant que visiteur : donc limité l'accès (pas le droit de faire un post/like)
 En tant qu'utilisateur connecté à un compte créer un post : post contient un titre, au minimum un tag et un message
 Modification du profil en tant qu'utilisateur connecté : une description, une ville une date de naissance etc...

@@ -17,3 +17,6 @@ Docker principalement, problème rencontrée sur la compréhension de comment fa
 
 Semaine du 3 Juin : 
 Documentation MCD faite, docker mise en place compliquée par manque de communication entre nous deux.
+
+Semaine du 10 Juin : 
+Dockerisation du projet pour séparer en différent serveur les services, documentation du projet et tentative de rajout de fonctionnalités
