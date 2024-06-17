@@ -413,7 +413,7 @@ func NewPost(w http.ResponseWriter, r *http.Request) {
 	db.Exec(`set search_path='test'`)
 
 	if newPostTitle != "" && newPostMsg != "" {
-		statementInfos, err := db.Prepare("INSERT INTO Post (UID,Name, Titre, Contenu, Date_Heure, Tag, Like) VALUES ( ?, ?, ?, ?, ?, ?, ?)")
+		statementInfos, err := db.Prepare("INSERT INTO Post (UID, Name, Titre, Contenu, Date_Heure, Tag, `Like`) VALUES (?, ?, ?, ?, ?, ?, ?);")
 		if err != nil {
 			panic(err)
 		}

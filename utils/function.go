@@ -50,7 +50,7 @@ func InitDatabase() *sql.DB {
 }
 func Update(db *sql.DB, UserSturct Utilisateur, DataStruct Data, PostStruct Post) {
 
-	updateUser, err := db.Prepare("UPDATE Utilisateur SET Nom_Utilisateur=?,Mot_de_passe=?,Adresse_mail=?,Follow=?, Followers=?, Description=?,Nb_Post=? WHERE ID=?  ")
+	updateUser, err := db.Prepare("UPDATE Utilisateur SET Nom_Utilisateur = ?, Mot_de_passe = ?, Adresse_mail = ?, Follow = ?, Followers = ?, Description = ?, Nb_Post = ? WHERE ID = ? ;")
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -61,14 +61,14 @@ func Update(db *sql.DB, UserSturct Utilisateur, DataStruct Data, PostStruct Post
 		fmt.Print(err)
 	}
 
-	updateData, err := db.Prepare("UPDATE Data SET UID=?, Pays=?, Prenom=?, Nom=?, Job=?, Naissance=?  WHERE UID=?  ")
+	updateData, err := db.Prepare("UPDATE Data SET UID=?, Pays=?, Prenom=?, Nom=?, Job=?, Naissance=?  WHERE UID=?;  ")
 	if err != nil {
 		fmt.Println(err)
 	}
 
 	defer updateData.Close()
 
-	updatePost, err := db.Prepare("UPDATE Post SET ID=?, UID=?, Name=?, Titre=?, Contenu=?, Date_Heure=?, Tag=?,Like=? , Nb_Com=? WHERE UID=?  ")
+	updatePost, err := db.Prepare("UPDATE Post SET ID = ?, UID = ?, Name = ?, Titre = ?, Contenu = ?, Date_Heure = ?, Tag = ?, `Like` = ?, Nb_Com = ? WHERE UID = ?;")
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -149,7 +149,7 @@ func TestLogin(obtenu_site string, obtenu_bdd string, is_hash bool) bool {
 
 func Test(db *sql.DB, Nom_Utilisateur string, Mot_de_passe string, Adresse_mail string) {
 
-	_, err := db.Exec("INSERT INTO Utilisateur (Nom_Utilisateur, Mot_de_passe, Adresse_mail, Follow, Followers )VALUES (?,?,?,?,?)", Nom_Utilisateur, Mot_de_passe, Adresse_mail, 0, 0)
+	_, err := db.Exec("INSERT INTO Utilisateur (Nom_Utilisateur, Mot_de_passe, Adresse_mail, Follow, Followers )VALUES (?,?,?,?,?); ", Nom_Utilisateur, Mot_de_passe, Adresse_mail, 0, 0)
 	if err != nil {
 		fmt.Println(err, "<-------------ICI ================================")
 	}
@@ -170,7 +170,7 @@ func fillStructPost(IDpost string) Post { // remplir une struct qui représente 
 	}
 	db.Exec(`set search_path='test'`)
 
-	stmt, err := db.Prepare("SELECT ID, Titre, Contenu, Date_Heure, Tag, Like FROM Post WHERE ID = ?")
+	stmt, err := db.Prepare("SELECT ID, Titre, Contenu, Date_Heure, Tag, `Like` FROM Post WHERE ID = ?;")
 	if err != nil {
 		panic(err)
 	}
@@ -282,9 +282,9 @@ func DBajoutlike(tabPost []Post, id int) {
 		if tabPost[x].ID == id {
 			templike := tabPost[x].Like + 1
 			// cmd := "UPDATE userinfo SET created = ? WHERE uid = ?"
-			fmt.Println("YESSSSSSSS" + " Ici la query   " + "UPDATE Post SET Like = '" + strconv.Itoa(templike) + "' WHERE ID =" + strconv.Itoa(id))
+			fmt.Println("YESSSSSSSS" + " Ici la query   " + "UPDATE Post SET Like = '" + strconv.Itoa(templike) + "' WHERE ID =" + strconv.Itoa(id) + ";")
 
-			vew, err := bdd.Exec("UPDATE Post SET Like = '" + strconv.Itoa(templike) + "' WHERE ID =" + strconv.Itoa(id))
+			vew, err := bdd.Exec("UPDATE Post SET `Like` = " + strconv.Itoa(templike) + " WHERE ID = " + strconv.Itoa(id) + ";")
 			if err != nil {
 				fmt.Println(err, "Failed du Exec")
 				fmt.Println(vew)
@@ -333,7 +333,7 @@ func showPost(w http.ResponseWriter, r *http.Request) {
 	}
 	defer db.Close()
 	db.Exec(`set search_path='test'`)
-	stmt, err := db.Prepare("SELECT ID, Titre, Tag FROM Post")
+	stmt, err := db.Prepare("SELECT ID, Titre, Tag FROM Post ;")
 	if err != nil {
 		panic(err)
 	}
@@ -352,7 +352,7 @@ func Search(r *http.Request) []int {
 	}
 	defer db.Close()
 	db.Exec(`set search_path='test'`)
-	stmt, err := db.Prepare("SELECT ID, Titre, Tag FROM Post")
+	stmt, err := db.Prepare("SELECT ID, Titre, Tag FROM Post;")
 	if err != nil {
 		panic(err)
 	}
@@ -451,7 +451,7 @@ func DBajoutcomm(commStr string, UID int, ID int, PID int) {
 	defer db.Close()
 	db.Exec(`set search_path='test'`)
 	ID++
-	stmt, err := db.Exec("INSERT INTO Commentaire ( UID, PID, Contenue)VALUES (?,?,?)", UID, PID, commStr)
+	stmt, err := db.Exec("INSERT INTO Commentaire ( UID, PID, Contenue)VALUES (?,?,?);", UID, PID, commStr)
 	fmt.Println("BDD OUVERT")
 	if err != nil {
 		fmt.Println(err)
@@ -466,7 +466,7 @@ func DBajoutPost(UID int, Titre string, Contenu string, Tag string) {
 	}
 	defer db.Close()
 	db.Exec(`set search_path='test'`)
-	stmt, err := db.Exec("INSERT INTO Post ( ID, Titre, Contenu, Date_Heure, Tag, Like)VALUES (?,?,?,?,?,?)", UID, Titre, Contenu, "1200", Tag, 0)
+	stmt, err := db.Exec("INSERT INTO Post ( ID, Titre, Contenu, Date_Heure, Tag, Like)VALUES (?,?,?,?,?,?);", UID, Titre, Contenu, "1200", Tag, 0)
 	fmt.Println("BDD OUVERT")
 	if err != nil {
 		fmt.Println(err)
@@ -486,7 +486,7 @@ func GetUserName(id int) string {
 	}
 	defer db.Close()
 	db.Exec(`set search_path='test'`)
-	getUser, err := db.Prepare("SELECT ID,Nom_Utilisateur FROM Utilisateur")
+	getUser, err := db.Prepare("SELECT ID,Nom_Utilisateur FROM Utilisateur;")
 	if err != nil {
 		fmt.Println("Error of get user form database :")
 		panic(err)
